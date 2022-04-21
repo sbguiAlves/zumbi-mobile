@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class MovimentoPersonagem : MonoBehaviour
 {
+    /* Só as classes filhas do MovimentoPersonagem conseguem configurar o valor
+    para o atributo Direcao. E o get é público */
+    public Vector3 Direcao { get; protected set; }
+
     private Rigidbody meuRigidbody;
-    private Vector3 direcao;
 
     void Awake()
     {
@@ -16,12 +19,12 @@ public class MovimentoPersonagem : MonoBehaviour
     para movimentar a jogadora*/
     public void SetDirecao(Vector2 direcao)
     {
-        this.direcao = new Vector3(direcao.x, 0, direcao.y);
+        this.Direcao = new Vector3(direcao.x, 0, direcao.y);
     }
 
     public void SetDirecao(Vector3 direcao)
     {
-        this.direcao = direcao;
+        this.Direcao = direcao.normalized;
     }
 
     public void Movimentar(float velocidade)
@@ -33,26 +36,35 @@ public class MovimentoPersonagem : MonoBehaviour
 
         meuRigidbody.MovePosition
             (meuRigidbody.position + //posição pela física
-            direcao.normalized * velocidade * Time.deltaTime); //Posição Destino 
+            Direcao * velocidade * Time.deltaTime); //Posição Destino. Direção já está normalizada antes em "Botão Analógico"
     }
 
     public void Rotacionar(Vector3 direcao)
     {
         /*  - Quaterninon: calcula a rotação ao utilizar os eixos (X, Y, Z) e um eixo imaginário
-            - LookRotation: passa uma posição e calcula o quanto tenho que rotacionar para olhar para esta posição */
+            - LookRotation: passa uma posição e calcula o quanto tenho que rotacionar para olhar para esta posição
 
-        Quaternion novaRotacao = Quaternion.LookRotation(direcao);
-        meuRigidbody.MoveRotation(novaRotacao);
+            - A direção em alguns momentos será zero, pois a jogadora está parada, disparando
+            o LookRotation no Debug. Portanto, utiliza-se a condição a seguir         */
+        if (direcao != Vector3.zero)
+        {
+            Quaternion novaRotacao = Quaternion.LookRotation(direcao);
+            meuRigidbody.MoveRotation(novaRotacao);
+        }
     }
 
     public void Morrer()
     {
-        //eu prefiro fazer um pop no inimigo quando ele tiver no chão. Aqui ele tá sumindo pra baixo
-        //ou ele cai e dps de um tempo ele disolve pra baixo, muitas possibilidades hmmm
         meuRigidbody.constraints = RigidbodyConstraints.None;
         meuRigidbody.velocity = Vector3.zero;
-        meuRigidbody.isKinematic = false; //pra gravidade funcionar
+        meuRigidbody.isKinematic = false;
         GetComponent<Collider>().enabled = false;
+    }
+
+    public void Reiniciar()
+    {
+        meuRigidbody.isKinematic = true;
+        GetComponent<Collider>().enabled = true;
     }
 
 }

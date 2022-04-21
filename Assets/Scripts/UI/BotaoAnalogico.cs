@@ -14,8 +14,10 @@ using UnityEngine.EventSystems;
     zero dentro de um elemento da interface, as ancoras nos ajudam a posicionar
     esse objeto em relação ao pai dele.
         - As ancoras fixam um ponto de referência de acordo com o objeto-pai.
+
+    IPointerUpHandler DEVE estar acompanhado com o IPointerDownHandler
     */
-public class BotaoAnalogico : MonoBehaviour, IDragHandler
+public class BotaoAnalogico : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
     [SerializeField]
     private RectTransform imagemDeFundo;
@@ -33,6 +35,18 @@ public class BotaoAnalogico : MonoBehaviour, IDragHandler
         this.PosicionarJoystick(posicaoLimitada);
 
         this.QuandoMudarOValor.Invoke(posicaoLimitada); // Valores entre 0 e 1
+    }
+
+    /*Ao soltar o mouse, voltar ao eixo zero...*/
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        this.PosicionarJoystick(Vector2.zero);
+        this.QuandoMudarOValor.Invoke(Vector2.zero);
+    }
+
+    public void OnPointerDown(PointerEventData dadosDoMouse)
+    {
+        this.OnDrag(dadosDoMouse);
     }
 
     private Vector2 LimitarPosicao(Vector2 posicaoMouse)

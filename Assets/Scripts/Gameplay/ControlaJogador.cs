@@ -21,7 +21,7 @@ public class ControlaJogador : MonoBehaviour, IMatavel, ICuravel
     private AnimacaoPersonagem animacaoJogador;
     public Status statusJogador;
 
-    void Start()
+    private void Start()
     {
         animacaoJogador = GetComponent<AnimacaoPersonagem>();
         meuMovimentoJogador = GetComponent<MovimentoJogador>();
@@ -31,16 +31,15 @@ public class ControlaJogador : MonoBehaviour, IMatavel, ICuravel
     /* Uma das boas práticas é não utilizar tanto o Update
     com métodos. Neste caso, utilizamos mais de condições dos
     métodos.*/
-    void Update()
+    private void Update()
     {
-        animacaoJogador.Movimentar(direcao.magnitude); //magnitude: tamanho unitário do vetor
+        animacaoJogador.Movimentar(this.meuMovimentoJogador.Direcao.magnitude); //magnitude: tamanho unitário do vetor
     }
 
-    /*Update que roda no tempo fixo a cada 0.02s*/
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         meuMovimentoJogador.Movimentar(statusJogador.VelocidadeJogador);
-        meuMovimentoJogador.RotacaoJogador(MascaraChao);
+        meuMovimentoJogador.RotacaoJogador();
     }
 
     /* Uma boa prática é utilizar métodos para organizar e manter o código

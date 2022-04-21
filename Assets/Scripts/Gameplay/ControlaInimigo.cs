@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlaInimigo : MonoBehaviour, IMatavel
+public class ControlaInimigo : MonoBehaviour, IMatavel, IReservavel
 {
     public GameObject Jogador;
     public GameObject KitMedicoPrefab;
@@ -27,24 +27,33 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     private MovimentoPersonagem movimentaInimigo;
     private Status statusInimigo;
 
-    void Start()
+    private IReservaDeObjetos reserva;
+
+    public void SetReserva(IReservaDeObjetos reserva)
+    {
+        this.reserva = reserva;
+    }
+
+    private void Awake()
     {
         animacaoInimigo = GetComponent<AnimacaoPersonagem>();
         movimentaInimigo = GetComponent<MovimentoPersonagem>();
-        statusInimigo = GetComponent<Status>();
+    }
 
+    private void Start()
+    {
+        Jogador = GameObject.FindWithTag(Tags.Jogador);
         AleatorizarZumbi();
-        Jogador = GameObject.FindWithTag(Tags.Jogador);//procurar jogador pela tag
 
-        //FindObjectOfType busca o objeto pelo tipo, sendo convertido para script
+        statusInimigo = GetComponent<Status>();
         scriptControlaInterface = GameObject.FindObjectOfType(typeof(ControlaInterface)) as ControlaInterface;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         scriptControlaInterface.TempoParaSobreviver();
 
-        float distancia = Vector3.Distance(transform.position, Jogador.transform.position); //passa duas posições e ele me dá a distancia
+        float distancia = Vector3.Distance(transform.position, Jogador.transform.position);
 
         movimentaInimigo.Rotacionar(direcao);
         animacaoInimigo.Movimentar(direcao.magnitude);
@@ -53,42 +62,33 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         {
             Vagar();
         }
-        else if (distancia > statusInimigo.DistanciaParaPerseguir) // persegue o jogador
+        else if (distancia > statusInimigo.DistanciaParaPerseguir)
         {
             Perseguir();
             animacaoInimigo.Atacar(false);
         }
-        else //Quando estiver perto do jogador, atacar
+        else
         {
             direcao = Jogador.transform.position - transform.position;
             animacaoInimigo.Atacar(true);
         }
     }
 
-    void Perseguir()
+    private void Perseguir()
     {
-        direcao = Jogador.transform.position - transform.position;//Posição Destino (jogador) - Posição Origem.
+        direcao = Jogador.transform.position - transform.position;
         movimentaInimigo.SetDirecao(direcao);
         movimentaInimigo.Movimentar(statusInimigo.AleatorizarVelocidade());
     }
 
-    void Vagar()
+    private void Vagar()
     {
         contadorVagar -= Time.deltaTime;
         if (contadorVagar <= 0)
         {
             posicaoAleatoria = AleatorizarPosicao();
-            contadorVagar += tempoEntrePosicoesAleatorias + Random.Range(-1f, 1f); // aleatoridade de duração de movimento pra cada zumbi
+            contadorVagar += tempoEntrePosicoesAleatorias + Random.Range(-1f, 1f);
         }
-
-        /* Obs.: A game engine não é capaz de calcular com exatidão a diferença de posição atual
-        com a destino, dando um bug no intervalo de distância para o movimento. Assim, utiliza-se
-        a variável booleana a seguir para dizer que chegou perto suficiente da posição final, deixando
-        de bugar a movimentação.
-
-        - Invés da diferença ser 0, o que equivaleria a estar na mesma posição, usamos o valor de 0.05
-        para realizar este cálculo.
-        */
 
         bool ficouPertoOSuficiente = Vector3.Distance(transform.position, posicaoAleatoria) <= 0.05;
         if (ficouPertoOSuficiente == false)
@@ -99,9 +99,8 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         }
     }
 
-    Vector3 AleatorizarPosicao()
+    private Vector3 AleatorizarPosicao()
     {
-        //vai pegar uma esfera de raio 1 e aleatorizar dentro dessa esfera uma posição qualquer
         Vector3 posicao = Random.insideUnitSphere * TamanhoDaEsfera;
         posicao += transform.position;
         posicao.y = transform.position.y;
@@ -109,7 +108,8 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         return posicao;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         Vector3 posicao = Random.insideUnitSphere * TamanhoDaEsfera;
         posicao += transform.position;
         posicao.y = transform.position.y;
@@ -127,7 +127,7 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     void AleatorizarZumbi()
     {
         int geraTipoZumbi = Random.Range(1, transform.childCount);
-        transform.GetChild(geraTipoZumbi).gameObject.SetActive(true); //achei um dos filhos em Zumbi e ativar um dos tipos.
+        transform.GetChild(geraTipoZumbi).gameObject.SetActive(true);
     }
 
     public void TomarDano(int dano)
@@ -144,7 +144,7 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
 
     public void Morrer()
     {
-        Destroy(gameObject, 2); //o objeto que a bala entrar em contato é destruído
+        Invoke("VoltarParaReserva", 2f);
         animacaoInimigo.Morrer();
         movimentaInimigo.Morrer();
         this.enabled = false;
@@ -152,15 +152,41 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         ControlaAudio.instancia.PlayOneShot(SomDeMorte);
         VerificarGeracaoKitMedico(porcentagemGerarKitMedico);
         scriptControlaInterface.AtualizarQuantidadeDeZumbisMortos();
-        meuGerador.DiminuirQuantidadeZumbisVivos();
     }
 
-    void VerificarGeracaoKitMedico(float porcentagemGeracao)
+    private void VerificarGeracaoKitMedico(float porcentagemGeracao)
     {
-        //Random.value pega todos os números decimais de 0.0 a 1.0
         if (Random.value <= porcentagemGeracao)
         {
             Instantiate(KitMedicoPrefab, transform.position, Quaternion.identity);
         }
+    }
+
+    private void VoltarParaReserva()
+    {
+        this.reserva.DevolverObjeto(this.gameObject);
+    }
+
+    /* Já que dá um trabalhão criar métodos unicos para cada uma das
+        classes, é melhor criar métodos a partir da interface, evitando
+        repetição de código. Assim, fica melhor para as classes que utilizam
+        da classe Reserva
+        
+        Isso se chama de polimorfismo, onde diferentes objetos que 
+        utilizam a mesma chamada de MÉTODOS (SÓ MÉTODOS), porém com comportamentos distintos,
+        podem utilizar da interface que serve como contrato entre diversos
+        objetos.*/
+
+    public void AoEntrarNaReserva()
+    {
+        this.movimentaInimigo.Reiniciar();
+        this.enabled = true;
+        this.gameObject.SetActive(false);
+        //statusInimigo.VidaZumbi = statusInimigo.VidaInicialZumbi; //to achando q vai dar problema dps, masvamo deixar de lado até eu melhorar do jeito que eu quero
+    }
+
+    public void AoSairDaReserva()
+    {
+        this.gameObject.SetActive(true);
     }
 }

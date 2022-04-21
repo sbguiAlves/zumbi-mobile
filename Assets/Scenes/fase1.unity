@@ -2117,11 +2117,11 @@ RectTransform:
   m_Father: {fileID: 1516482334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -123.39996, y: 0.2966919}
-  m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -53.759003, y: 0.00002670288}
+  m_SizeDelta: {x: 107.5181, y: 90.6011}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &294073814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2144,7 +2144,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: e49c6a09ebe2fc14d9d1f27ac17077eb, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3846,7 +3846,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 2.5}
-  m_SizeDelta: {x: 35, y: 35}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &593084272
 MonoBehaviour:
@@ -5815,6 +5815,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 188bf8ca40be94564b3dbb0d4a24bfa5, type: 3}
+--- !u!1 &770304165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 770304167}
+  - component: {fileID: 770304166}
+  m_Layer: 0
+  m_Name: ReservaDeChefes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &770304166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770304165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26117f791571eaf4cbf82cccedb6051b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1063500868937916, guid: bbd9b6a1ce730454db9ee7aa404cc20a, type: 3}
+  quantidade: 5
+--- !u!4 &770304167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770304165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1385.528, y: 486.52426, z: -24.068668}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &781282112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6732,8 +6777,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 9, y: -15.15}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: 0, y: -10.104004}
+  m_SizeDelta: {x: 230, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &910761229
 MonoBehaviour:
@@ -6757,11 +6802,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 46c62526bb2c6384e83074d45fc139ff, type: 3}
-    m_FontSize: 41
+    m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 41
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -7672,7 +7717,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 93.5314, y: 93.5314}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048288423
 MonoBehaviour:
@@ -8319,8 +8364,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -81.5, y: -121.259995}
-  m_SizeDelta: {x: 70, y: 70}
+  m_AnchoredPosition: {x: -145.34, y: -248.07}
+  m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1104405915
 MonoBehaviour:
@@ -11232,6 +11277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4348a421140d9546b03e029fea02e0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reservaDeChefes: {fileID: 770304166}
   tempoEntreGeracoes: 60
   ChefePrefab: {fileID: 1063500868937916, guid: bbd9b6a1ce730454db9ee7aa404cc20a,
     type: 3}
@@ -11815,8 +11861,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 143.01, y: -40.15}
-  m_SizeDelta: {x: 249.61426, y: 69.09503}
+  m_AnchoredPosition: {x: 315, y: -87.021}
+  m_SizeDelta: {x: 561.0907, y: 146.1658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1445307951
 MonoBehaviour:
@@ -12425,8 +12471,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 190.5115, y: 190.5115}
+  m_AnchoredPosition: {x: 50, y: 50}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1494185303
 MonoBehaviour:
@@ -12626,11 +12672,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 46c62526bb2c6384e83074d45fc139ff, type: 3}
-    m_FontSize: 51
+    m_FontSize: 100
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 53
+    m_MaxSize: 300
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -12678,8 +12724,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.682, y: -10.104}
-  m_SizeDelta: {x: 140.62775, y: 64.59338}
+  m_AnchoredPosition: {x: -32, y: -33.044}
+  m_SizeDelta: {x: 226.6742, y: 104.12}
   m_Pivot: {x: 1, y: 1}
 --- !u!1001 &1528926672
 PrefabInstance:
@@ -13502,6 +13548,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16111edfb9b07438fb8856681ed9208e, type: 3}
+--- !u!1 &1657278611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1657278613}
+  - component: {fileID: 1657278612}
+  m_Layer: 0
+  m_Name: ReservaDeBalas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1657278612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657278611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52db542c6dcb35e4a96341bd75d6404e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8396739279352712466, guid: 101705ac9c1ae2346acfc53b351ffecd, type: 3}
+--- !u!4 &1657278613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657278611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1385.528, y: 486.52426, z: -24.068668}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1671996962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15749,10 +15839,6 @@ PrefabInstance:
       propertyPath: scriptControlaInterface
       value: 
       objectReference: {fileID: 758287783}
-    - target: {fileID: 1870930706, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1884102019447498, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
       propertyPath: m_Name
       value: Jogador
@@ -15801,21 +15887,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4632992891921111214, guid: 4b3bb44effa49480d8d18049684cc33a,
+    - target: {fileID: 8961631074001300514, guid: 4b3bb44effa49480d8d18049684cc33a,
         type: 3}
-      propertyPath: DistanciaParaVagar
-      value: 5
+      propertyPath: reserva
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4632992891921111214, guid: 4b3bb44effa49480d8d18049684cc33a,
+    - target: {fileID: 8961631074001300514, guid: 4b3bb44effa49480d8d18049684cc33a,
         type: 3}
-      propertyPath: VelocidadeMaxZumbi
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4632992891921111214, guid: 4b3bb44effa49480d8d18049684cc33a,
-        type: 3}
-      propertyPath: VelocidadeMinZumbi
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: reservaDeBalas
+      value: 
+      objectReference: {fileID: 1657278612}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
 --- !u!1 &1870930703 stripped
@@ -18234,6 +18315,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2080060824}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2084283246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2084283248}
+  - component: {fileID: 2084283247}
+  m_Layer: 0
+  m_Name: ReservaDeZumbis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2084283247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084283246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26117f791571eaf4cbf82cccedb6051b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1063500868937916, guid: 35861510587b7489780fe86970823679, type: 3}
+  quantidade: 20
+--- !u!4 &2084283248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084283246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1385.528, y: 486.52426, z: -24.068668}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2086581838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4514499278929870, guid: e4e0f3cfde2314194a64de87d1b562ac,
@@ -19424,13 +19550,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6148273469661151073, guid: 5f2f8f1da1d41774c84b53b4ca910a30,
         type: 3}
+      propertyPath: reserva
+      value: 
+      objectReference: {fileID: 2084283247}
+    - target: {fileID: 6148273469661151073, guid: 5f2f8f1da1d41774c84b53b4ca910a30,
+        type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6148273469661151073, guid: 5f2f8f1da1d41774c84b53b4ca910a30,
         type: 3}
       propertyPath: TempoGerarZumbi
-      value: 0.1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6148273469661151073, guid: 5f2f8f1da1d41774c84b53b4ca910a30,
         type: 3}

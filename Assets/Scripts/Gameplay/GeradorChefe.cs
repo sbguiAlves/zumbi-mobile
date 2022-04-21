@@ -1,20 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GeradorChefe : MonoBehaviour
 {
+    public ReservaFixa reservaDeChefes;
+
     private ControlaInterface scriptControlaInterface;
     private float tempoParaProximaGeracao = 0;
 
     public float tempoEntreGeracoes = 60;
-    public GameObject ChefePrefab;
     public AudioClip AlertaDeChefao;
     public Transform[] PosicoesPossiveisDeSpawn;
 
-
     private Transform jogador;
-
 
     private void Start()
     {
@@ -27,15 +27,22 @@ public class GeradorChefe : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad > tempoParaProximaGeracao)
         {
-            Vector3 posicaoDeCriacao = CalcularPosicaoMaisDistanteDoJogador();
-            ControlaAudio.instancia.PlayOneShot(AlertaDeChefao);
-            Instantiate(ChefePrefab, posicaoDeCriacao, Quaternion.identity);
-            scriptControlaInterface.AparecerTextoChefeCriado();
-            tempoParaProximaGeracao = Time.timeSinceLevelLoad + tempoEntreGeracoes;
+            if (this.reservaDeChefes.TemObjeto())
+            {
+                ControlaAudio.instancia.PlayOneShot(AlertaDeChefao);
+
+                Vector3 posicaoDeCriacao = CalcularPosicaoMaisDistanteDoJogador();
+                var chefe = this.reservaDeChefes.PegarObjeto();
+                var controleChefe = chefe.GetComponent<ControlaChefe>();
+                controleChefe.SetPosicao(posicaoDeCriacao); //mover o chefe de forma que ele sabe onde tá o jogador
+
+                scriptControlaInterface.AparecerTextoChefeCriado();
+                tempoParaProximaGeracao = Time.timeSinceLevelLoad + tempoEntreGeracoes;
+            }
         }
     }
 
-    Vector3 CalcularPosicaoMaisDistanteDoJogador()
+    private Vector3 CalcularPosicaoMaisDistanteDoJogador()
     {
         Vector3 posicaoDeMaiorDistancia = Vector3.zero;
         float maiorDistancia = 0;
@@ -50,11 +57,10 @@ public class GeradorChefe : MonoBehaviour
             }
 
         }
-
         return posicaoDeMaiorDistancia;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         int numeroDeSpawns = PosicoesPossiveisDeSpawn.Length;
@@ -64,5 +70,4 @@ public class GeradorChefe : MonoBehaviour
             Gizmos.DrawWireSphere(PosicoesPossiveisDeSpawn[i].position, 1);
         }
     }
-
 }

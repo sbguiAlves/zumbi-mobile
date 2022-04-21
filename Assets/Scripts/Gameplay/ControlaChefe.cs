@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class ControlaChefe : MonoBehaviour, IMatavel
+public class ControlaChefe : MonoBehaviour, IMatavel, IReservavel
 {
     private Transform jogador;
     private NavMeshAgent agente;
@@ -22,18 +22,29 @@ public class ControlaChefe : MonoBehaviour, IMatavel
 
     public int DanoMinimoChefe = 30, DanoMaximoChefe = 40;
 
+    private IReservaDeObjetos reserva;
+
+    private void Awake()
+    {
+        animacaoChefe = GetComponent<AnimacaoPersonagem>();
+        movimentoChefe = GetComponent<MovimentoPersonagem>();
+        agente = GetComponent<NavMeshAgent>();
+        statusChefe = GetComponent<Status>();
+    }
+
     private void Start()
     {
         jogador = GameObject.FindWithTag(Tags.Jogador).transform;
-        agente = GetComponent<NavMeshAgent>();
-        statusChefe = GetComponent<Status>();
+        
         agente.speed = statusChefe.VelocidadeMaxZumbi;
-
-        animacaoChefe = GetComponent<AnimacaoPersonagem>();
-        movimentoChefe = GetComponent<MovimentoPersonagem>();
-
         SliderVidaChefe.maxValue = statusChefe.VidaChefe;
         AtualizarInterface();
+    }
+
+    public void SetPosicao(Vector3 posicao)
+    {
+        this.transform.position = posicao;
+        this.agente.Warp(posicao); //teletransportar
     }
 
     private void Update()
@@ -41,17 +52,14 @@ public class ControlaChefe : MonoBehaviour, IMatavel
         agente.SetDestination(jogador.position);
         animacaoChefe.Movimentar(agente.velocity.magnitude);
 
-        if (agente.hasPath == true) //só se tem um destino
+        if (agente.hasPath == true)
         {
-            //remaining: oq falta pra chegar no destino; stoppingDistance: destino de parada
             bool estouPertoDoJogador = agente.remainingDistance <= agente.stoppingDistance;
 
             if (estouPertoDoJogador)
             {
                 animacaoChefe.Atacar(true);
                 Vector3 direcao = jogador.position - transform.position;
-
-                //isKinematic joga a responsabilidade pro NavMesh em vez de ser o RigidBody para comandar o movimento
                 movimentoChefe.Rotacionar(direcao);
             }
             else
@@ -61,7 +69,7 @@ public class ControlaChefe : MonoBehaviour, IMatavel
         }
     }
 
-    void AtacaJogador()
+    private void AtacaJogador()
     {
         int dano = Random.Range(DanoMinimoChefe, DanoMaximoChefe);
         jogador.GetComponent<ControlaJogador>().TomarDano(dano);
@@ -87,24 +95,43 @@ public class ControlaChefe : MonoBehaviour, IMatavel
     {
         animacaoChefe.Morrer();
         movimentoChefe.Morrer();
-        this.enabled = false;
+        this.enabled = false; //script
         agente.enabled = false;
         ControlaAudio.instancia.PlayOneShot(SomDeMorte);
 
         Instantiate(KitMedicoPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject, 2);
+        Invoke("VoltarParaReserva", 2f);
+    }
+
+    private void VoltarParaReserva()
+    {
+        this.reserva.DevolverObjeto(this.gameObject);
     }
 
     void AtualizarInterface()
     {
         SliderVidaChefe.value = statusChefe.VidaChefe;
-
         float porcentagemDaVida = (float)statusChefe.VidaChefe / statusChefe.VidaInicialChefe;
-        /*  - Interpolação linear: de uma cor para a outra
-            - De onde eu quero ir, para qual tom de cor deve chegar no limiar
-            - E a razão entre as duas
-        */
         Color corDaVida = Color.Lerp(CorDaVidaMinima, CorDaVidaMaxima, porcentagemDaVida);
         ImagemSlider.color = corDaVida;
+    }
+
+    public void SetReserva(IReservaDeObjetos reserva)
+    {
+        this.reserva = reserva;
+    }
+
+    public void AoEntrarNaReserva()
+    {
+        this.gameObject.SetActive(false);
+        this.movimentoChefe.Reiniciar();
+        this.enabled = true;
+        agente.enabled = true;
+        statusChefe.VidaChefe = statusChefe.VidaInicialChefe;
+    }
+
+    public void AoSairDaReserva()
+    {
+        this.gameObject.SetActive(true);
     }
 }
